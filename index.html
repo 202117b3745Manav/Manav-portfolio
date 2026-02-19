@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manav Vashistha — Senior Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --bg:        #f7f6f2;
+      --surface:   #ffffff;
+      --border:    #e8e6e0;
+      --navy:      #0d1f3c;
+      --navy-mid:  #1a3358;
+      --teal:      #0a9396;
+      --teal-lt:   #94d2bd;
+      --text:      #1a1a2e;
+      --muted:     #5f6b7a;
+      --radius:    12px;
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Typography ─── */
+    .serif { font-family: 'DM Serif Display', serif; }
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; line-height: 1.15; }
+    h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--navy); }
+    h3 { font-size: 1.15rem; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+
+    /* ─── Scroll reveal ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247,246,242,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-color: var(--border); }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      transition: var(--transition);
+      border-radius: 2px;
+    }
+
+    /* ─── Mobile Menu ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* ─── Section Layout ─── */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 2rem;
+    }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-content { max-width: 560px; }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 2px;
+      background: var(--teal);
+    }
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--navy);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .hero-name em {
+      color: var(--teal);
+      font-style: italic;
+    }
+    .hero-tagline {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+      border: 2px solid var(--navy);
+    }
+    .btn-primary:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(10,147,150,0.25);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    /* Hero visual card */
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 32px rgba(13,31,60,0.06);
+      position: relative;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-lt));
+      border-radius: 20px 20px 0 0;
+    }
+    .hc-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      margin-bottom: 1.5rem;
+    }
+    .hc-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.25rem;
+    }
+    .hc-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .hc-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .hc-stat {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .hc-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+    }
+    .hc-stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .hc-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: rgba(10,147,150,0.1);
+      color: var(--teal);
+      border: 1px solid rgba(10,147,150,0.2);
+    }
+
+    /* ─── About ─── */
+    #about { background: var(--bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-side h2 { margin-bottom: 1.25rem; }
+    .about-highlight {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-size: 1.0rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .achievement-list {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .achievement-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .ach-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(10,147,150,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 0.9rem;
+    }
+    .ach-content strong { display: block; font-size: 0.9rem; color: var(--navy); margin-bottom: 0.15rem; }
+    .ach-content span { font-size: 0.85rem; color: var(--muted); }
+
+    /* ─── Experience ─── */
+    #experience { background: var(--surface); max-width: 100%; }
+    #experience > * { max-width: 1100px; margin-left: auto; margin-right: auto; }
+    #experience-inner { max-width: 1100px; margin: 0 auto; padding: 100px 2rem; }
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal), var(--border));
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 0 3rem 2.5rem;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute;
+      left: -7px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--teal);
+    }
+    .tl-item.current .tl-dot {
+      background: var(--teal);
+      box-shadow: 0 0 0 4px rgba(10,147,150,0.2);
+    }
+    .tl-meta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .tl-role {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .tl-company {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .tl-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .tl-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.9rem;
+    }
+    .tl-tag {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--muted);
+      font-weight: 500;
+      border: 1px solid var(--border);
+    }
+
+    /* ─── Projects ─── */
+    #projects { background: var(--bg); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-lt));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(13,31,60,0.1);
+      border-color: rgba(10,147,150,0.3);
+    }
+    .project-card:hover::after { transform: scaleX(1); }
+    .project-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(13,31,60,0.08), rgba(10,147,150,0.12));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      color: var(--navy);
+    }
+    .project-title { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .project-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .stack-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(10,147,150,0.08);
+      color: var(--teal);
+      border: 1px solid rgba(10,147,150,0.18);
+    }
+
+    /* ─── Skills ─── */
+    #skills { background: var(--surface); max-width: 100%; }
+    #skills-inner { max-width: 1100px; margin: 0 auto; padding: 100px 2rem; }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .skill-group {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+    .skill-group:hover {
+      border-color: rgba(10,147,150,0.35);
+      box-shadow: 0 4px 20px rgba(10,147,150,0.07);
+    }
+    .sg-icon {
+      font-size: 1.4rem;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+    .sg-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .sg-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .sg-tag {
+      font-size: 0.78rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .sg-tag:hover {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    /* ─── Contact / Footer ─── */
+    #contact {
+      max-width: 100%;
+      padding: 0;
+      background: var(--navy);
+    }
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .contact-left h2 {
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 1rem;
+    }
+    .contact-left p { color: rgba(255,255,255,0.55); font-size: 1rem; }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      transition: var(--transition);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .contact-link:hover {
+      background: rgba(10,147,150,0.2);
+      border-color: rgba(10,147,150,0.4);
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .contact-link i {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--teal-lt);
+      font-size: 1rem;
+    }
+
+    /* Footer bar */
+    .footer-bar {
+      background: rgba(0,0,0,0.25);
+      padding: 1.25rem 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-card { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      section { padding: 70px 1.5rem; }
+      #experience-inner { padding: 70px 1.5rem; }
+      #skills-inner { padding: 70px 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hc-stats { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Manav<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-content reveal">
+      <div class="hero-eyebrow">Senior Software Engineer · HCLTech</div>
+      <h1 class="hero-name">Manav<br><em>Vashistha</em></h1>
+      <p class="hero-tagline">
+        Backend architect specialising in enterprise-grade B2B e-commerce. Building scalable SAP Hybris systems that process <strong>25k+ daily orders</strong> for global clients like ExxonMobil.
+      </p>
+      <div class="hero-actions">
+        <a href="mailto:manavvashistha.23@gmail.com" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Get In Touch
+        </a>
+        <a href="https://www.linkedin.com/in/manavvashistha-4b0687236" target="_blank" class="btn btn-outline">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-card reveal" style="transition-delay:0.2s">
+      <div class="hc-avatar">MV</div>
+      <div class="hc-title">Manav Vashistha</div>
+      <div class="hc-sub">Noida, Uttar Pradesh, India · Open to Opportunities</div>
+      <div class="hc-stats">
+        <div class="hc-stat">
+          <div class="hc-stat-num">4.5+</div>
+          <div class="hc-stat-label">Years Exp.</div>
+        </div>
+        <div class="hc-stat">
+          <div class="hc-stat-num">60%</div>
+          <div class="hc-stat-label">Load Reduction</div>
+        </div>
+        <div class="hc-stat">
+          <div class="hc-stat-num">80%</div>
+          <div class="hc-stat-label">Incident Drop</div>
+        </div>
+        <div class="hc-stat">
+          <div class="hc-stat-num">25k+</div>
+          <div class="hc-stat-label">Daily Orders</div>
+        </div>
+      </div>
+      <div class="hc-badges">
+        <span class="badge">SAP Hybris</span>
+        <span class="badge">Java · Spring Boot</span>
+        <span class="badge">Microservices</span>
+        <span class="badge">AI Certified</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-side reveal">
+      <span class="section-label">About Me</span>
+      <h2>Building systems <span class="about-highlight">that scale.</span></h2>
+    </div>
+    <div class="about-text reveal" style="transition-delay:0.15s">
+      <p>
+        I'm a Senior Software Engineer at HCLTech with over 4.5 years of experience in backend development, specialising in enterprise-grade B2B e-commerce solutions using Java, Spring Boot, and SAP Hybris.
+      </p>
+      <p>
+        My work on the ExxonMobil ACE project spans end-to-end development of scalable microservices and high-volume Order-to-Cash workflows. I've transitioned from individual contributor to mentor, conducting Knowledge Transfer sessions and guiding fresh graduates in Hybris technicalities.
+      </p>
+      <p>
+        Outside engineering, I lead the <em>Happy Feet Club</em> — a 250+ member dance community at HCLTech Noida — blending my passion for culture and community leadership.
+      </p>
+      <div class="achievement-list">
+        <div class="achievement-item">
+          <div class="ach-icon"><i class="fas fa-bolt"></i></div>
+          <div class="ach-content">
+            <strong>60% Faster Load Times</strong>
+            <span>Spearheaded query tuning and code refactoring across the entire B2B platform.</span>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="ach-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="ach-content">
+            <strong>80% Incident Reduction</strong>
+            <span>Stabilised production by identifying architectural bottlenecks and implementing Datadog monitoring.</span>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="ach-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="ach-content">
+            <strong>B.Sc. Design & Computing — BITS Pilani</strong>
+            <span>8+ CGPA with distinction in Capstone Project. Feb 2022 – Feb 2026.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EXPERIENCE ═══════════ -->
+<div id="experience" style="background: var(--surface);">
+  <div id="experience-inner">
+    <span class="section-label reveal">Work History</span>
+    <h2 class="reveal" style="margin-bottom:3rem; transition-delay:0.1s">Experience</h2>
+    <div class="timeline">
+
+      <div class="tl-item current reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">Oct 2025 – Present · HCLTech</div>
+        <div class="tl-role">Senior Software Engineer</div>
+        <div class="tl-company">Noida, Uttar Pradesh, India · Full-time</div>
+        <p class="tl-desc">Core member of the backend engineering team for ExxonMobil (global B2B e-commerce). Designing and deploying robust microservices, spearheading performance engineering initiatives, and leading system reliability improvements. Also actively mentoring junior developers through structured KT sessions.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">SAP Hybris</span>
+          <span class="tl-tag">Java</span>
+          <span class="tl-tag">Spring Boot</span>
+          <span class="tl-tag">Microservices</span>
+          <span class="tl-tag">Datadog</span>
+          <span class="tl-tag">OTC Workflows</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">Dec 2021 – Sep 2025 · HCLTech (3 yrs 10 mos)</div>
+        <div class="tl-role">Software Engineer</div>
+        <div class="tl-company">Noida, Uttar Pradesh, India · Full-time</div>
+        <p class="tl-desc">Full-time backend developer on the ExxonMobil ACE project. Worked with SAP Hybris, Java, and Spring MVC on a large-scale B2B eCommerce platform. Became a top contributor in resolving technical issues, handled debugging, backend enhancements, and collaborated in an Agile/Scrum environment.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">SAP Hybris</span>
+          <span class="tl-tag">Java</span>
+          <span class="tl-tag">Spring MVC</span>
+          <span class="tl-tag">Agile / Scrum</span>
+          <span class="tl-tag">Git / GitHub</span>
+          <span class="tl-tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">Jun 2021 – Nov 2021 · HCLTech (6 mos)</div>
+        <div class="tl-role">Development Intern</div>
+        <div class="tl-company">Noida, Uttar Pradesh, India · Remote</div>
+        <p class="tl-desc">Joined the live ExxonMobil ACE B2B project as an intern. Responsible for backend bug-fixes and application logic in Java and Spring MVC. First exposure to SAP Hybris and agile methodologies that became the foundation for a full-time career on the same project.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Java</span>
+          <span class="tl-tag">Spring MVC</span>
+          <span class="tl-tag">Git</span>
+          <span class="tl-tag">SAP Hybris (intro)</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">Sep 2020 – May 2021 · HCLTech (9 mos)</div>
+        <div class="tl-role">Scholar — Trainee</div>
+        <div class="tl-company">Noida, Uttar Pradesh, India</div>
+        <p class="tl-desc">Scholarship-based training programme during COVID-19. First 6 months covered networking, OS fundamentals, and soft skills; final 3 months provided specialised Java, Spring, and Spring Boot training using Eclipse — the technical launchpad for my career.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Java</span>
+          <span class="tl-tag">Spring</span>
+          <span class="tl-tag">Spring Boot</span>
+          <span class="tl-tag">Networking</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section id="projects">
+  <span class="section-label reveal">What I've Built</span>
+  <h2 class="reveal" style="transition-delay:0.1s">Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-icon"><i class="fas fa-oil-can"></i></div>
+      <div class="project-title">ExxonMobil ACE — B2B eCommerce Platform</div>
+      <p class="project-desc">
+        Enterprise-scale B2B e-commerce system powering 25k+ daily orders and 5k+ concurrent users. Engineered OTC workflows, API integrations, and microservices with full-stack Datadog observability, achieving a 60% reduction in load times and 80% drop in critical incidents.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">SAP Hybris</span>
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">Spring Boot</span>
+        <span class="stack-tag">Microservices</span>
+        <span class="stack-tag">Datadog</span>
+        <span class="stack-tag">SQL</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal" style="transition-delay:0.1s">
+      <div class="project-icon"><i class="fas fa-car-side"></i></div>
+      <div class="project-title">Indian ANPR System</div>
+      <p class="project-desc">
+        A real-time Automatic Number Plate Recognition system featuring vehicle detection, OCR processing, and API integration for vehicle data enrichment. Built for Indian number plate standards with live video stream processing.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">OpenCV</span>
+        <span class="stack-tag">Tesseract OCR</span>
+        <span class="stack-tag">YOLO</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal" style="transition-delay:0.2s">
+      <div class="project-icon"><i class="fas fa-robot"></i></div>
+      <div class="project-title">AI-Enabled Developer Tooling</div>
+      <p class="project-desc">
+        Implemented GitHub Copilot-powered developer workflows for the backend team, contributing to the HCLTech AI-Enabled Java Developer initiative. Streamlined code generation, review, and test automation pipelines.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">GitHub Copilot</span>
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">Generative AI</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal" style="transition-delay:0.3s">
+      <div class="project-icon"><i class="fas fa-eye"></i></div>
+      <div class="project-title">Computer Vision Capstone — BITS Pilani</div>
+      <p class="project-desc">
+        Capstone project at BITS Pilani exploring Computer Vision techniques with OpenCV. Achieved distinction grade. Laid the groundwork for applied CV work including the Indian ANPR system.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">OpenCV</span>
+        <span class="stack-tag">Computer Vision</span>
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">Java Swing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ SKILLS ═══════════ -->
+<div id="skills" style="background: var(--surface);">
+  <div id="skills-inner">
+    <span class="section-label reveal">Tech Stack</span>
+    <h2 class="reveal" style="transition-delay:0.1s">Skills</h2>
+    <div class="skills-layout">
+
+      <div class="skill-group reveal">
+        <div class="sg-icon"><i class="fas fa-code"></i></div>
+        <div class="sg-title">Languages</div>
+        <div class="sg-tags">
+          <span class="sg-tag">Java</span>
+          <span class="sg-tag">SQL</span>
+          <span class="sg-tag">HTML/CSS</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal" style="transition-delay:0.05s">
+        <div class="sg-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="sg-title">Frameworks</div>
+        <div class="sg-tags">
+          <span class="sg-tag">Spring Boot</span>
+          <span class="sg-tag">Spring MVC</span>
+          <span class="sg-tag">SAP Hybris</span>
+          <span class="sg-tag">Microservices</span>
+          <span class="sg-tag">Java Swing</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal" style="transition-delay:0.1s">
+        <div class="sg-icon"><i class="fas fa-eye"></i></div>
+        <div class="sg-title">Computer Vision</div>
+        <div class="sg-tags">
+          <span class="sg-tag">OpenCV</span>
+          <span class="sg-tag">YOLO</span>
+          <span class="sg-tag">Tesseract OCR</span>
+          <span class="sg-tag">Image Processing</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal" style="transition-delay:0.15s">
+        <div class="sg-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="sg-title">Observability & DevOps</div>
+        <div class="sg-tags">
+          <span class="sg-tag">Datadog</span>
+          <span class="sg-tag">Git / GitHub</span>
+          <span class="sg-tag">Agile / Scrum</span>
+          <span class="sg-tag">CI/CD</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal" style="transition-delay:0.2s">
+        <div class="sg-icon"><i class="fas fa-brain"></i></div>
+        <div class="sg-title">AI & Certifications</div>
+        <div class="sg-tags">
+          <span class="sg-tag">Generative AI (Google)</span>
+          <span class="sg-tag">Salesforce AI</span>
+          <span class="sg-tag">GitHub Copilot</span>
+          <span class="sg-tag">SAP Commerce Cloud</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal" style="transition-delay:0.25s">
+        <div class="sg-icon"><i class="fas fa-people-group"></i></div>
+        <div class="sg-title">Soft Skills</div>
+        <div class="sg-tags">
+          <span class="sg-tag">Team Leadership</span>
+          <span class="sg-tag">Mentorship</span>
+          <span class="sg-tag">OTC Process</span>
+          <span class="sg-tag">Knowledge Transfer</span>
+          <span class="sg-tag">Community Building</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <span class="section-label" style="color: var(--teal-lt);">Let's Connect</span>
+      <h2>Say hello. <br>Build something great.</h2>
+      <p style="margin-top:1rem;">I'm always open to discussing new projects, opportunities, or ideas in backend engineering and beyond.</p>
+    </div>
+    <div class="contact-links reveal" style="transition-delay:0.15s">
+      <a href="mailto:manavvashistha.23@gmail.com" class="contact-link">
+        <i class="fas fa-envelope"></i>
+        manavvashistha.23@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/manavvashistha-4b0687236" target="_blank" class="contact-link">
+        <i class="fab fa-linkedin"></i>
+        linkedin.com/in/manavvashistha-4b0687236
+      </a>
+      <a href="tel:+918595240785" class="contact-link">
+        <i class="fas fa-phone"></i>
+        +91 85952 40785
+      </a>
+    </div>
+  </div>
+  <div class="footer-bar">
+    © 2025 Manav Vashistha · Built with care · Senior Software Engineer @ HCLTech
+  </div>
+</div>
+
+<script>
+  /* ─── Nav scroll effect ─── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* ─── Hamburger ─── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  /* ─── Scroll reveal ─── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
